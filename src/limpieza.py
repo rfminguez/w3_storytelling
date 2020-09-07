@@ -17,29 +17,12 @@ def divide_csv_field(df, field):
     return df.set_index(df.columns.drop(field,1).tolist())[field].str.split(',', expand=True).stack().reset_index().rename(columns={0:field})
 
 
-def normalize_us_data(df):
-    '''
-    notice: it is a function created ad-hoc for this dataset.
-    receives: a dataframe.
-    returns: a dataframe with the data in the column Country that references to the EEUU normalized.
-    '''
-    return df['Country'].apply(lambda c: "United States" if c.startswith("US:") else c)
-
-
 def df_select_columns(df, *columns):
     '''
     receives: a dataframe and a set of columns.
     returns: a dataframe that contains only those columns.
     '''
     return df[list(columns)]
-
-
-def remove_whitespaces(df, field):
-    '''
-    receives: a dataframe and the name of a field.
-    returns: a daraframe with the spaces removed to the left and right of this field in all rows of the dataframe.
-    '''
-    return df[field].apply(lambda s: s.strip())
 
 
 def normalize_keyword_field(keyword):
